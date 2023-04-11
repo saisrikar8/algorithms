@@ -55,3 +55,42 @@ The target was found in the array at index 7
 
 
 ```
+
+Here is another implentation of the example using Python:
+
+```python
+def binarySearch(nums: list,start: int, end: int, target: int):
+    if (start >= end):
+        return -1
+    mid = (start + end)//2
+    if (nums[mid] == target):
+        return mid
+    else:
+        if (nums[mid] > target):
+            return binarySearch(nums, start, mid, target)
+        else:
+            return binarySearch(nums, mid, end, target)
+
+
+def main():
+    sortedArr = [0, 4, 7, 10, 14, 23, 45, 47, 53]
+    target = 47
+    targetIndex = binarySearch(sortedArr, 0, len(sortedArr) - 1, target)
+    if (targetIndex > -1):
+        print(f"The value was found at index {targetIndex}")
+    else:
+        print("The value was not found in this array")
+
+
+if __name__ == '__main__':
+    main()
+
+```
+
+Here is the output of the code:
+
+```
+The value was found at index 7
+
+
+```
