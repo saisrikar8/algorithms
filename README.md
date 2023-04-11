@@ -1,6 +1,6 @@
 # Algorithms
 
-<h2>Table of Contents</h2>
+<h2 id = "toc">Table of Contents</h2>
 <ol>
   <li><a href = "#bfs">Breadth First Search</a></li>
   <li><a href = "#binarysearch">Binary Search</a></li>
@@ -11,6 +11,9 @@
 <img src = "https://upload.wikimedia.org/wikipedia/commons/5/5d/Breadth-First-Search-Algorithm.gif?20100504223639"/>
 
 <h2 id = "binarysearch">Binary Search</h2>
+
+<a href = "#toc"><< Back to table of contents</a>
+
 <p><b>Binary Search</b> is an algorithm used to search through a sorted array and find the index of a target value. Binary search uses recursion to continue to split the array into multiple pieces until it finds the target value. Basically, it will split the beginning array in half. Then, it will try to find the range that the target value belongs to. If the target value is in the higher range, it will continue to split the higher range like a seperate array. The same occurs for the lower range of the array if the target belongs to it. The program does this by finding a "midpoint" value of the array using start and end indices. If the target is less than the midpoint, the program will continue recursing through the lower range of the array. The same occurs for the higher range of the array if the target is greater than the target value. The time complexity of this algorithm is <code>O(log(n))</code> where n is the length of the array. The following image represents a program searching through an example array for the value of 47 using the binary search algorithm.</p>
 <img src = "https://d18l82el6cdm1i.cloudfront.net/uploads/bePceUMnSG-binary_search_gif.gif"/>
 
