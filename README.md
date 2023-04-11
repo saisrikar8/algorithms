@@ -3,6 +3,7 @@
 <h2>Table of Contents</h2>
 <ol>
   <li><a href = "https://github.com/saisrikar8/algorithms/new/main?readme=1#bfs">Breadth-First Search</a></li>
+  <li><a href = "https://github.com/saisrikar8/algorithms/edit/main/README.md#binary-search">Binary Search</a></li>
 </ol>
 
 <h2>Breadth-First Search</h2>
