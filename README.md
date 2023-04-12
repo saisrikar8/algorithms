@@ -223,7 +223,7 @@ if __name__ == '__main__':
 
 ## TreeNode.py
 
-```
+```python
 class TreeNode:
     val = None
     neighbors = None
