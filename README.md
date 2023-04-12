@@ -10,6 +10,134 @@
 <p>BFS (Or breadth-first search) is one of the methods used to search for a node given the root node. First, you need to start at the root node of the tree. Then, you start searching its neighbors. After searching each node, the nodes will be stored in a queue. This allows the program to know which nodes it has already covered. As the program continues to keep traversing through the neighbors of multiple nodes, it will not visit a node it has already visited using the queue that stored all visited nodes. The time complexity of this algorithm is <code>O(V+E)</code> where V is the number of vertices and E is the number of edges onn the graph. The following image represents how breadth-first search visits each node and does not repeat the nodes the program has already visited:</p>
 <img src = "https://upload.wikimedia.org/wikipedia/commons/5/5d/Breadth-First-Search-Algorithm.gif?20100504223639"/>
 
+Here is a basic implementation of Breadth First Search. The object type `TreeNode` is being used to create a tree of values. You can see the implementation of this class is shown below `Main.java` under `TreeNode.java`.
+
+### Main.java
+
+This is the main code that is run as it is under `class Main` and the `main()` method. Aside from the `breadthFirstSearch()` method and the `findValueInTree()` method, there is also a `getRandomNumber()` method that uses the `Math.random()` method to generate a random number for testing purposes. The purpose of the `main()` method is to acquire multiple values to insert into the tree being inputted into the `findValueInTree()` method. This method then uses the `breadthFirstSearch()` method to recurse through the tree. In the `breadthFirstSearch()` method, the there is a for loop, that traverses through the `ArrayList<TreeNode>` that stores the neighbor of the root of the tree given. If any of the values of the neighbors match the target value, the method will return the reference to the matched node. If a neighbor does not match the given target value, the method will call itself and the value of the parameter `TreeNode root` will change to the neighbor.
+
+```java
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+    public static Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    public static void main(String[] args){
+        ArrayList<TreeNode> neighbors = new ArrayList<TreeNode>();
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        System.out.println("Starting processes...");
+        TreeNode randomNode = new TreeNode(getRandomNumber(1, 20), new ArrayList<TreeNode>());
+        randomNode.addNeighborNode(new TreeNode(getRandomNumber(1, 20)));
+        randomNode.addNeighborNode(new TreeNode(getRandomNumber(1, 20), neighbors));
+        neighbors.clear();
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        randomNode.addNeighborNode(new TreeNode(getRandomNumber(1, 20), neighbors));
+        neighbors.clear();
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        randomNode.addNeighborNode(new TreeNode(getRandomNumber(1, 20), neighbors));
+        neighbors.clear();
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        randomNode.addNeighborNode(new TreeNode(getRandomNumber(1, 20), neighbors));
+        neighbors.clear();
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        neighbors.add(new TreeNode(getRandomNumber(1, 20)));
+        randomNode.addNeighborNode(new TreeNode(100, neighbors));
+        randomNode.addNeighborNode(new TreeNode(getRandomNumber(1, 20)));
+        TreeNode targetNode = findValueInTree(randomNode, 100);
+        System.out.println("The reference to the node with the value 100 was found at " + targetNode);
+    }
+    public static TreeNode findValueInTree(TreeNode tree, int target){
+        System.out.println("Searching Nodes...");
+        TreeNode targetNode = breadthFirstSearch(tree, target);
+        System.out.println("Value match found");
+        queue = new LinkedList<TreeNode>();
+        return targetNode;
+    }
+    //returns first node with target value
+    public static TreeNode breadthFirstSearch(TreeNode tree, int target){
+        if (tree.getNeighbors() == null){
+            return null;
+        }
+        for (int i = 0; i < tree.getNeighbors().size(); i++){
+            TreeNode neighbor = tree.getTreeNodeFromNeighborArrayList(i);
+            if (queue.contains(neighbor)){
+                continue;
+            }
+            if (neighbor.val == target){
+                return neighbor;
+            }
+            else{
+                TreeNode searched = breadthFirstSearch(neighbor, target);
+                if (searched != null && searched.val == target){
+                    return searched;
+                }
+            }
+        }
+        return null;
+    }
+    public static int getRandomNumber(double min, double max){
+        return (int) ((Math.random() * max) + min);
+    }
+}
+
+```
+
+### TreeNode.java
+
+Here is a simple implementation of a single node in a tree. It includes an `ArrayList<TreeNode>` that stores the neighbors of the values. There is also the variable `val` that stores the integer value being stored in this node. This class also features a few helper methods that allows editing and viewing the contents of the node's neighbors.
+
+```java
+import java.util.ArrayList;
+
+public class TreeNode {
+    private ArrayList<TreeNode> neighbors;
+    public int val;
+    public TreeNode(){
+    }
+    public TreeNode(int value){
+        val = value;
+    }
+    public TreeNode(int value, ArrayList<TreeNode> neighborNodes){
+        val = value;
+        neighbors = neighborNodes;
+    }
+    public void addNeighborNode(TreeNode neighborNode){
+        neighbors.add(neighborNode);
+    }
+    public TreeNode getTreeNodeFromNeighborArrayList(int index){
+        return neighbors.get(index);
+    }
+    public ArrayList<TreeNode> getNeighbors(){
+        return neighbors;
+    }
+}
+
+```
+
+Here is the output for the program:
+
+```
+Starting processes...
+Searching Nodes...
+Value match found
+The reference to the node with the value 100 was found at TreeNode@5fd0d5ae
+
+```
+
 <h2 id = "binarysearch">Binary Search</h2>
 
 <a href = "#toc"><< Back to table of contents</a>
