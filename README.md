@@ -14,7 +14,7 @@ Here is a basic implementation of Breadth First Search. The object type `TreeNod
 
 ### Main.java
 
-This is the main code that is run as it is under `class Main` and the `main()` method. Aside from the `breadthFirstSearch()` method and the `findValueInTree()` method, there is also a `getRandomNumber()` method that uses the `Math.random()` method to generate a random number for testing purposes. The purpose of the `main()` method is to acquire multiple values to insert into the tree being inputted into the `findValueInTree()` method. This method then uses the `breadthFirstSearch()` method to recurse through the tree. In the `breadthFirstSearch()` method, the there is a for loop, that traverses through the `ArrayList<TreeNode>` that stores the neighbor of the root of the tree given. If any of the values of the neighbors match the target value, the method will return the reference to the matched node. If a neighbor does not match the given target value, the method will call itself and the value of the parameter `TreeNode root` will change to the neighbor.
+This is the main code that is run as it is under `class Main` and the `main()` method. Aside from the `breadthFirstSearch()` method and the `findValueInTree()` method, there is also a `getRandomNumber()` method that uses the `Math.random()` method to generate a random number for testing purposes. The purpose of the `main()` method is to acquire multiple values to insert into the tree being inputted into the `findValueInTree()` method. This method then uses the `breadthFirstSearch()` method to recurse through the tree. In the `breadthFirstSearch()` method, there is a for loop that traverses through the `ArrayList<TreeNode>` of the given root `TreeNode`. If any of the values of the neighbors match the target value, the method will return the reference to the matched node. If a neighbor does not match the given target value, the method will call itself and the value of the parameter `TreeNode root` will change to the neighbor. Every time the `breadthFirstSearch()` method visits a node, it will store it in an object `queue` of type `Queue<TreeNode>`. If the neighbors of a node has already been visited, the node will be ignored a it is already known that it is not a node with the target value. If a node with the target value cannot be found, the method will return `null`. Once the method is over, the queue will be cleared, so the method `findValueInTree()` can be called multiple times.
 
 ```java
 import java.util.ArrayList;
@@ -62,6 +62,10 @@ public class Main {
     }
     public static TreeNode findValueInTree(TreeNode tree, int target){
         System.out.println("Searching Nodes...");
+        queue.add(tree);
+        if (tree.val == target){
+            return tree;
+        }
         TreeNode targetNode = breadthFirstSearch(tree, target);
         System.out.println("Value match found");
         queue = new LinkedList<TreeNode>();
@@ -74,6 +78,7 @@ public class Main {
         }
         for (int i = 0; i < tree.getNeighbors().size(); i++){
             TreeNode neighbor = tree.getTreeNodeFromNeighborArrayList(i);
+            queue.add(neighbor);
             if (queue.contains(neighbor)){
                 continue;
             }
