@@ -143,6 +143,112 @@ The reference to the node with the value 100 was found at TreeNode@5fd0d5ae
 
 ```
 
+Here is a similar implementation in Python.
+
+## main.py
+
+```python
+from out.Python.TreeNode import TreeNode
+import random
+
+queue = list()
+
+
+def breadthFirstSearch(root: TreeNode, target: int):
+    if root is None:
+        return
+    for neighbor in root.neighbors:
+        if neighbor in queue:
+            continue
+        if neighbor.val == target:
+            print("Value match found")
+            return neighbor
+        else:
+            searched = breadthFirstSearch(neighbor, target)
+            if searched is not None and searched.val == target:
+                return searched
+    return
+
+
+def findValueInTree(root: TreeNode, target: int) -> TreeNode:
+    print("Searching through tree...")
+    if root.val == target:
+        return root
+    queue.append(root)
+    matchedNode = breadthFirstSearch(root, target)
+    queue.clear()
+    return matchedNode
+
+
+def main():
+    print('Starting processes...')
+    randomNode = TreeNode(random.randint(1, 20), list())
+    neighbors = list()
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    randomNode.neighbors.append(TreeNode(random.randint(1, 20), neighbors))
+    neighbors.clear()
+    neighbors = list()
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    randomNode.neighbors.append(TreeNode(random.randint(1, 20), neighbors))
+    neighbors.clear()
+    neighbors = list()
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    randomNode.neighbors.append(TreeNode(random.randint(1, 20), neighbors))
+    neighbors.clear()
+    neighbors = list()
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    neighbors.append(random.randint(1, 20))
+    randomNode.neighbors.append(TreeNode(random.randint(1, 20), neighbors))
+    neighbors.clear()
+    randomNode.neighbors.append(
+        TreeNode(40, [random.randint(1, 20), random.randint(1, 20), random.randint(1, 20), random.randint(1, 20)]))
+    targetNode = findValueInTree(randomNode, 40)
+    print("The target value was found in the tree node. Here is some info on it:\n" + str(targetNode))
+
+
+if __name__ == '__main__':
+    main()
+```
+
+## TreeNode.py
+
+```
+class TreeNode:
+    val = None
+    neighbors = None
+
+    def __init__(self, value: int = None, neighborlist: list = None):
+        self.val = value
+        self.neighbors = neighborlist
+
+    def __str__(self):
+        return f'Value: {self.val}\nNeighbors: {self.neighbors}.'
+        
+```
+
+Here is the output of the program:
+
+```
+Starting processes...
+Searching through tree...
+Value match found
+The target value was found in the tree node. Here is some info on it:
+Value: 40
+Neighbors: [19, 9, 14, 5].
+
+```
+
 <h2 id = "binarysearch">Binary Search</h2>
 
 <a href = "#toc"><< Back to table of contents</a>
