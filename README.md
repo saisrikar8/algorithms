@@ -101,7 +101,7 @@ public class Main {
 
 ```
 
-### TreeNode.java
+<h3 id = "treenode">TreeNode.java</h3>
 
 Here is a simple implementation of a single node in a tree. It includes an `ArrayList<TreeNode>` that stores the neighbors of the values. There is also the variable `val` that stores the integer value being stored in this node. This class also features a few helper methods that allows editing and viewing the contents of the node's neighbors.
 
@@ -340,3 +340,61 @@ The value was found at index 7
 Depth-first search is another way to search through a graph or tree. Depth-first search is used a lot to augment other tasks such as counting connected components and finding articulation points in trees. The depth-first algorithm starts by searching the root node's value. Then, it will continue to search through a path of neighbor nodes until the program reaches a dead end. The program will backtrack from the dead end to the last node with unvisited neighbor elements. A dead end of the program is when there is no unvisited neighbor nodes of the current node. The program will continue to backtrack until it reaches a node that has unvisited neighbor elements. If there are no longer any unvisited neighbor nodes in the tree, the program will backtrack to the root node and the algorithm will be over. The time complexity of this program is `O(V+E)` where V is the number of vertices in the tree and E is the number of edges in the tree.
 
 <img src = "https://upload.wikimedia.org/wikipedia/commons/7/7f/Depth-First-Search.gif"/>
+
+Here is a simple implementation of the depth-first search algorithm using the previous <a href = "#treenode">TreeNode implementation</a> for the breadth-first search algorithm.
+
+``java
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class dfs {
+    public static Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    public static void main(String[] args) {
+        ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
+        TreeNode node1 = new TreeNode(12);
+        TreeNode node2 = new TreeNode(24);
+        TreeNode node3 = new TreeNode(11);
+        TreeNode node4 = new TreeNode(47);
+        TreeNode node5 = new TreeNode(62);
+        node1.addNeighborNode(node2);
+        node1.addNeighborNode(node3);
+        node2.addNeighborNode(node1);
+        node2.addNeighborNode(node3);
+        node2.addNeighborNode(node4);
+        node3.addNeighborNode(node1);
+        node3.addNeighborNode(node5);
+        TreeNode targetNode = depthFirstSearch(node1, 47);
+        System.out.println("The target value 47 was found at the TreeNode reference: " + targetNode + "\nHere is some info on it:\nThe value is " + targetNode.val + " and its neighbors are " + targetNode.getNeighbors());
+    }
+    public static TreeNode findValueInTree(TreeNode root, int target){
+        TreeNode targetNode = depthFirstSearch(root, target);
+        queue.clear();
+        return targetNode;
+    }
+    //returns the first node matching the tree value
+    public static TreeNode depthFirstSearch(TreeNode root, int target){
+        if (root.val == target){
+            return root;
+        }
+        for (int i = 0; i < root.getNeighbors().size(); i++){
+            TreeNode neighbor = root.getTreeNodeFromNeighborArrayList(i);
+            //Checking if the neighbor has been visited
+            //If neighbor is visited, skip this neighbor
+            if (queue.contains(neighbor)) {
+                continue;
+            }
+            queue.add(neighbor);
+            //Searching through the neighbor nodes of the neighbor
+            TreeNode searched = depthFirstSearch(neighbor, target);
+            //If null is returned, the searched nodes did not provide a matched node for the target value
+            if (searched != null){
+                return searched;
+            }
+        }
+        //null is returned from method when there are no unvisited neighbor nodes of parameter 'root'
+        return null;
+    }
+}
+
+```
