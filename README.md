@@ -343,7 +343,7 @@ Depth-first search is another way to search through a graph or tree. Depth-first
 
 Here is a simple implementation of the depth-first search algorithm using the previous <a href = "#treenode">TreeNode implementation</a> for the breadth-first search algorithm.
 
-``java
+```java
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
