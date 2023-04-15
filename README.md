@@ -333,3 +333,8 @@ The value was found at index 7
 
 
 ```
+
+
+## Depth First Search
+
+Depth-first search is another way to search through a graph or tree. Depth-first search is used a lot to augment other tasks such as counting connected components and finding articulation points in trees. The depth-first algorithm starts by searching the root node's value. Then, it will continue to search through a path of neighbor nodes until the program reaches a dead end. The program will backtrack from the dead end to the last node with unvisited neighbor elements. A dead end of the program is when there is no unvisited neighbor nodes of the current node. The program will continue to backtrack until it reaches a node that has unvisited neighbor elements. If there are no longer any unvisited neighbor nodes in the tree, the program will backtrack to the root node and the algorithm will be over. The time complexity of this program is `O(V+E)` where V is the number of vertices in the tree and E is the number of edges in the tree.
