@@ -12,7 +12,7 @@
 
 Here is a basic implementation of Breadth First Search. The object type `TreeNode` is being used to create a tree of values. You can see the implementation of this class is shown below `Main.java` under `TreeNode.java`.
 
-### Main.java
+<h3 id = "bfs">Main.java</h3>
 
 This is the main code that is run as it is under `class Main` and the `main()` method. Aside from the `breadthFirstSearch()` method and the `findValueInTree()` method, there is also a `getRandomNumber()` method that uses the `Math.random()` method to generate a random number for testing purposes. The purpose of the `main()` method is to acquire multiple values to insert into the tree being inputted into the `findValueInTree()` method. This method then uses the `breadthFirstSearch()` method to recurse through the tree. In the `breadthFirstSearch()` method, there is a for loop that traverses through the `ArrayList<TreeNode>` of the given root `TreeNode`. If any of the values of the neighbors match the target value, the method will return the reference to the matched node. If a neighbor does not match the given target value, the method will call itself and the value of the parameter `TreeNode root` will change to the neighbor. Every time the `breadthFirstSearch()` method visits a node, it will store it in an object `queue` of type `Queue<TreeNode>`. If the neighbors of a node has already been visited, the node will be ignored a it is already known that it is not a node with the target value. If a node with the target value cannot be found, the method will return `null`. Once the method is over, the queue will be cleared, so the method `findValueInTree()` can be called multiple times.
 
@@ -343,6 +343,8 @@ Depth-first search is another way to search through a graph or tree. Depth-first
 
 Here is a simple implementation of the depth-first search algorithm using the previous <a href = "#treenode">TreeNode implementation</a> for the breadth-first search algorithm.
 
+This implementation is very similar to the <a href = "#bfs">previously shown breadth-first search implementation</a>. First, the tree is created. Then, the `findValueInTree()` method is called. This method then calls the `depthFirstSearch()` method, which finds the target value with the dfs algorithm. First, it will check the value of the node it is currently visiting. Then, if the current node has neighbors, the method will traverse through the `ArrayList<TreeNode>` of neighbors in a `for` loop. In each iteration of the `for` loop, the program will check if a neighbor has not already been visited. If it has been visited, the neighbor node will be ignored. If it hasn't been visited, the method will store the neighbor node in a queue and call the `depthFirstSearch()` method again where the `TreeNode root` parameter is the neighbor node. The method will continue to recurse until it reaches a dead-end, where all the neighbors of the node it is currently on are already visited. If the method doesn't find a matched node for the target value, the method will return null. 
+
 ```java
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -351,12 +353,11 @@ import java.util.Queue;
 public class dfs {
     public static Queue<TreeNode> queue = new LinkedList<TreeNode>();
     public static void main(String[] args) {
-        ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
-        TreeNode node1 = new TreeNode(12);
-        TreeNode node2 = new TreeNode(24);
-        TreeNode node3 = new TreeNode(11);
-        TreeNode node4 = new TreeNode(47);
-        TreeNode node5 = new TreeNode(62);
+        TreeNode node1 = new TreeNode(12,new ArrayList<TreeNode>());
+        TreeNode node2 = new TreeNode(24,new ArrayList<TreeNode>());
+        TreeNode node3 = new TreeNode(11,new ArrayList<TreeNode>());
+        TreeNode node4 = new TreeNode(47,new ArrayList<TreeNode>());
+        TreeNode node5 = new TreeNode(62,new ArrayList<TreeNode>());
         node1.addNeighborNode(node2);
         node1.addNeighborNode(node3);
         node2.addNeighborNode(node1);
@@ -377,6 +378,9 @@ public class dfs {
         if (root.val == target){
             return root;
         }
+        if (root.getNeighbors() == null){
+            return null;
+        }
         for (int i = 0; i < root.getNeighbors().size(); i++){
             TreeNode neighbor = root.getTreeNodeFromNeighborArrayList(i);
             //Checking if the neighbor has been visited
@@ -396,5 +400,15 @@ public class dfs {
         return null;
     }
 }
+
+```
+
+Here is the output of the program shown above.
+
+```
+The target value 47 was found at the TreeNode reference: TreeNode@378bf509
+Here is some info on it:
+The value is 47 and its neighbors are []
+
 
 ```
