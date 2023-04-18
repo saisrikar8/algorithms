@@ -65,14 +65,14 @@ public class Main {
     public static TreeNode findValueInTree(TreeNode tree, int target){
         System.out.println("Searching Nodes...");
         queue.add(tree);
-        TreeNode targetNode = breadthFirstSearch(tree, target);
+        TreeNode targetNode = breadthFirstSearch(target);
         System.out.println("Value match found");
-        queue.clear();
-        visited.clear();
+        queue = new LinkedList<TreeNode>();
+        visited = new ArrayList<TreeNode>();
         return targetNode;
     }
     //returns first node with target value
-    public static TreeNode breadthFirstSearch(TreeNode tree, int target){
+    public static TreeNode breadthFirstSearch(int target){
         while(!queue.isEmpty()){
             TreeNode currentNode = queue.poll();
             if (!visited.contains(currentNode)){
