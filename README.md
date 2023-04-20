@@ -209,7 +209,7 @@ if __name__ == '__main__':
 
 ```
 
-## TreeNode.py
+<h3 id = "treenodepy">TreeNode.py</h3>
 
 ```python
 class TreeNode:
@@ -221,7 +221,7 @@ class TreeNode:
         self.neighbors = neighborlist
 
     def __str__(self):
-        return f'TreeNode: Value: {self.val}, Neighbors: {[str(neighbor) for neighbor in self.neighbors]}.'
+        return f'TreeNode: Value: {self.val}, Neighbors: {self.neighbors}.'
         
 ```
 
@@ -231,7 +231,7 @@ Here is the output of the program:
 Starting processes...
 Searching through tree...
 The target value was found in the tree node. Here is some info on it:
-TreeNode: Value: 40, Neighbors: ['TreeNode: Value: 19, Neighbors: [].', 'TreeNode: Value: 4, Neighbors: [].', 'TreeNode: Value: 19, Neighbors: [].', 'TreeNode: Value: 20, Neighbors: [].'].
+TreeNode: Value: 40, Neighbors: [<Python.TreeNode.TreeNode object at 0x0000018928084590>, <Python.TreeNode.TreeNode object at 0x00000189280845D0>, <Python.TreeNode.TreeNode object at 0x0000018928084610>, <Python.TreeNode.TreeNode object at 0x0000018928084650>].
 
 ```
 
@@ -397,4 +397,51 @@ Here is some info on it:
 The value is 47 and its neighbors are []
 
 
+```
+
+Here is a similar Python implementation using the <a href = "#treenodepy">previous TreeNode implementation</a> used for breadth first search.
+
+```python
+from Python.TreeNode import TreeNode
+import random
+
+visited = list()
+
+
+def depthFirstSearch(tree: TreeNode, target: int):
+    if tree.val == target:
+        return tree
+    for neighbor in tree.neighbors:
+        if neighbor in visited:
+            continue
+        visited.append(neighbor)
+        searched = depthFirstSearch(neighbor, target)
+        if searched is not None:
+            return searched
+    return None
+
+
+def findValueInTree(tree: TreeNode, target: int):
+    targetNode = depthFirstSearch(tree, target)
+    visited.clear()
+    return targetNode
+
+
+def main():
+    tree = TreeNode(random.randint(1, 20), list())
+    for i in range(10):
+        tree.neighbors.append(TreeNode(random.randint(1, 20)))
+        tree.neighbors[len(tree.neighbors) - 1].neighbors.append(TreeNode(random.randint(1, 20)))
+        if i > 7:
+            tree.neighbors[len(tree.neighbors) - 1].neighbors.append(tree.neighbors[random.randint(0, i - 1)])
+    randomNum = random.randint(1, 20)
+    randomNeighbors = [TreeNode(random.randint(1, 20)), TreeNode(random.randint(1, 20)), TreeNode(random.randint(1, 20)), TreeNode(random.randint(1, 20))]
+    node = TreeNode(randomNum, randomNeighbors)
+    tree.neighbors.append(node)
+    targetNode = findValueInTree(tree, randomNum)
+    print('The value ' + str(randomNum) + ' was found.\n' + str(targetNode))
+
+
+if __name__ == '__main__':
+    main()
 ```
